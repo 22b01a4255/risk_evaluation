@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Loan Status Prediction</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Loan Status Prediction</h1>
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="loan_amnt">Loan Amount :</label>
+                <input type="text" name="loan_amnt" required>
+            </div>
+
+            <div class="form-group">
+                <label for="int_rate">Interest Rate :</label>
+                <input type="text" name="int_rate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="annual_inc">Annual Income :</label>
+                <input type="text" name="annual_inc" required>
+            </div>
+
+            <div class="form-group">
+                <label for="dti">Debt-to-Income Ratio :</label>
+                <input type="text" name="dti" required>
+            </div>
+
+            <div class="form-group">
+                <label for="fico_range_low">FICO Score (Low) :</label>
+                <input type="text" name="fico_range_low" required>
+            </div>
+
+            <div class="form-group">
+                <label for="open_acc">Number of Open Accounts :</label>
+                <input type="text" name="open_acc" required>
+            </div>
+
+            <div class="form-group">
+                <label for="revol_bal">Revolving Balance :</label>
+                <input type="text" name="revol_bal" required>
+            </div>
+
+            <div class="form-group">
+                <label for="revol_util">Revolving Utilization :</label>
+                <input type="text" name="revol_util" required>
+            </div>
+
+            <div class="form-group">
+                <label for="delinq_2yrs">Delinquencies in the Last 2 Years :</label>
+                <input type="text" name="delinq_2yrs" required>
+            </div>
+            
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction is not none %}
+        <div class="result">
+            <h2>Prediction: {{ prediction }}</h2>
+        </div>
+        {% endif %}
+
+        {% if prediction is not none %}
+        <div class="probability">
+            <h3>Predicted Probability of Loan Approval: {{ probability | default(0) | round(2) }}</h3><br>
+            <h3>Risk Level: {{ risk_level | default(0) | round(2) }} (higher means more risk)</h3>
+        </div>
+        {% endif %}
+</body>
+</html>
